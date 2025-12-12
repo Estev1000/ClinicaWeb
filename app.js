@@ -480,3 +480,194 @@ window.toggleExpand = function (el) {
         el.innerHTML = `${fullText} <i class='bx bx-chevron-up'></i>`;
     }
 };
+
+// =====================================================
+// SISTEMA PREMIUM - MERCADO PAGO INTEGRATION
+// =====================================================
+
+// Función para verificar si Premium está activo
+function isPremiumActive() {
+    return localStorage.getItem('clinic_premium_active') === 'true';
+}
+
+// Función para abrir modal de pago
+window.openPaymentModal = function () {
+    openModal('modalPremium');
+};
+
+// Función para copiar link de pago
+window.copyPaymentLink = function () {
+    const link = 'https://mpago.la/1qQmcP7';
+    navigator.clipboard.writeText(link).then(() => {
+        alert('✅ Link de pago copiado al portapapeles\n\nCompártelo con tus clientes para que puedan activar Premium.');
+    }).catch(() => {
+        // Fallback si clipboard API no funciona
+        prompt('Copia este link de pago:', link);
+    });
+};
+
+// Función para ingresar código de activación manual
+window.enterProCode = function () {
+    const code = prompt("🔑 Ingresa tu código de activación Premium:\n\n(Si pagaste y no se activó automáticamente, contacta a soporte)");
+
+    if (!code) return; // Usuario canceló
+
+    // Códigos válidos (compatibles con clínica y gimnasio)
+    const validCodes = ['clinic_pro_2025', 'admin2025', 'gym_pro_2025', 'duenos2025'];
+
+    if (validCodes.includes(code.trim())) {
+        localStorage.setItem('clinic_premium_active', 'true');
+
+        // Registrar activación
+        const activationLog = JSON.parse(localStorage.getItem('activation_log') || '[]');
+        activationLog.push({
+            date: new Date().toISOString(),
+            code: code,
+            method: 'manual'
+        });
+        localStorage.setItem('activation_log', JSON.stringify(activationLog));
+
+        alert("🎉 ¡Felicidades! Versión PREMIUM Activada\n\n✅ Pacientes ilimitados\n✅ Todas las funciones desbloqueadas\n✅ Exportación de datos habilitada\n\nLa página se recargará para aplicar los cambios.");
+        location.reload();
+    } else {
+        alert("❌ Código inválido\n\nPor favor verifica el código e intenta nuevamente.\n\nSi pagaste y tienes problemas, contacta a soporte.");
+    }
+};
+
+// Función para exportar datos (PREMIUM)
+window.exportClinicData = function () {
+    // === LIMITACIÓN FREE ===
+    if (!isPremiumActive()) {
+        alert("🔒 Función Premium Bloqueada\n\n" +
+            "La exportación de copias de seguridad es exclusiva de la versión PREMIUM.\n\n" +
+            "Actualiza a Premium para:\n" +
+            "✅ Exportar todos tus datos\n" +
+            "✅ Hacer copias de seguridad\n" +
+            "✅ Migrar entre dispositivos");
+        openPaymentModal();
+        return;
+    }
+    // ======================
+
+    // Exportar todos los datos
+    const allData = {
+        patients: Storage.get('patients'),
+        doctors: Storage.get('doctors'),
+        appointments: Storage.get('appointments'),
+        history: Storage.get('history'),
+        exportDate: new Date().toISOString(),
+        version: 'ClinicaWeb Premium v1.0'
+    };
+
+    const blob = new Blob([JSON.stringify(allData, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    const filename = `clinicaweb_backup_${new Date().toISOString().slice(0, 10)}.json`;
+    a.download = filename;
+    a.click();
+    URL.revokeObjectURL(url);
+
+    alert(`✅ Copia de seguridad creada exitosamente\n\nArchivo: ${filename}\n\nGuarda este archivo en un lugar seguro.`);
+};
+
+// Agregar botón de exportar en el sidebar (opcional)
+function addExportButton() {
+    const sidebar = document.querySelector('.sidebar-nav');
+    if (sidebar && !document.getElementById('btnExportData')) {
+        const exportBtn = document.createElement('a');
+        exportBtn.href = '#';
+        exportBtn.className = 'nav-link';
+        exportBtn.id = 'btnExportData';
+        exportBtn.innerHTML = '<i class="bx bx-download"></i><span>Exportar Datos</span>';
+        exportBtn.onclick = (e) => {
+            e.preventDefault();
+            exportClinicData();
+        };
+        sidebar.appendChild(exportBtn);
+    }
+}
+
+// Verificar estado Premium al cargar la página
+document.addEventListener('DOMContentLoaded', function () {
+    // 1. Verificar parámetro URL (redirección de Mercado Pago)
+    const urlParams = new URLSearchParams(window.location.search);
+    const accessCode = urlParams.get('access');
+
+    if (accessCode && ['clinic_pro_2025', 'gym_pro_2025'].includes(accessCode)) {
+        localStorage.setItem('clinic_premium_active', 'true');
+
+        // Registrar activación
+        const activationLog = JSON.parse(localStorage.getItem('activation_log') || '[]');
+        activationLog.push({
+            date: new Date().toISOString(),
+            code: accessCode,
+            method: 'url'
+        });
+        localStorage.setItem('activation_log', JSON.stringify(activationLog));
+
+        // Limpiar URL
+        window.history.replaceState({}, document.title, window.location.pathname);
+
+        // Mostrar mensaje de bienvenida
+        setTimeout(() => {
+            alert("🎉 ¡Pago Exitoso! Bienvenido a ClinicaWeb PREMIUM\n\n" +
+                "✅ Tu suscripción está activa\n" +
+                "✅ Todas las funciones desbloqueadas\n" +
+                "✅ Pacientes ilimitados\n\n" +
+                "¡Gracias por confiar en nosotros! 🚀");
+        }, 500);
+    }
+
+    // 2. Verificar LocalStorage y actualizar UI
+    if (isPremiumActive()) {
+        const btnPremium = document.getElementById('btnPremium');
+        if (btnPremium) {
+            btnPremium.innerHTML = '<i class="bx bx-check-circle"></i> PRO ACTIVADO';
+            btnPremium.classList.add('activated');
+            btnPremium.onclick = () => {
+                alert("✅ Versión Premium Activa\n\n" +
+                    "Tu suscripción está activa y todas las funciones están desbloqueadas.\n\n" +
+                    "Gracias por ser usuario Premium! 💎");
+            };
+        }
+    }
+
+    // 3. Agregar botón de exportar
+    setTimeout(addExportButton, 1000);
+});
+
+// =====================================================
+// LIMITACIONES VERSIÓN FREE
+// =====================================================
+
+// Modificar la función de agregar paciente para incluir limitación
+const originalPatientSubmit = document.getElementById('patient-form').onsubmit;
+document.getElementById('patient-form').addEventListener('submit', function (e) {
+    const id = document.getElementById('p-id').value;
+
+    // Si NO es edición (nuevo paciente)
+    if (!id) {
+        const patients = Storage.get('patients');
+
+        // === LIMITACIÓN FREE: Máximo 10 pacientes ===
+        if (!isPremiumActive() && patients.length >= 10) {
+            e.preventDefault();
+            e.stopImmediatePropagation();
+
+            alert("🔒 Límite Alcanzado - Actualiza a Premium\n\n" +
+                "La versión GRATUITA permite máximo 10 pacientes.\n\n" +
+                "Actualmente tienes: " + patients.length + " pacientes registrados\n\n" +
+                "Actualiza a PREMIUM para:\n" +
+                "✅ Pacientes ILIMITADOS\n" +
+                "✅ Historial clínico completo\n" +
+                "✅ Reportes avanzados\n" +
+                "✅ Copias de seguridad\n\n" +
+                "Solo $8.000/mes - ¡Menos que un café por día!");
+
+            openPaymentModal();
+            return false;
+        }
+        // ============================================
+    }
+}, true); // Usar capture para ejecutar antes que el handler original
