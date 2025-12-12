@@ -66,6 +66,10 @@
                 <div class="user-profile">
                     <img src="https://ui-avatars.com/api/?name=Admin+User&background=0D8ABC&color=fff" alt="Admin">
                     <span>Administrador</span>
+                    <button id="btnSoporte" class="btn-support" onclick="openModal('modalSupport')"
+                        style="background: #3498db; color: white; padding: 8px 16px; border: none; border-radius: 8px; cursor: pointer; margin-right: 10px; font-weight: 600; transition: all 0.3s ease;">
+                        <i class='bx bx-support'></i> Soporte
+                    </button>
                     <button id="btnPremium" class="btn-premium" onclick="openPaymentModal()">
                         <i class='bx bxs-crown'></i> PREMIUM
                     </button>
@@ -518,6 +522,63 @@
                     </button>
                 </div>
             </div>
+        </div>
+    </div>
+
+    <!-- Modal Soporte -->
+    <div id="modalSupport" class="modal">
+        <div class="modal-content" style="max-width: 500px;">
+            <span class="close-modal" onclick="closeModal('modalSupport')">&times;</span>
+            <h2 style="text-align: center; color: #2c3e50; margin-bottom: 10px;">
+                <i class='bx bx-support' style="color: #3498db; font-size: 2rem;"></i>
+                Soporte y Contacto
+            </h2>
+            <p style="text-align: center; color: #7f8c8d; margin-bottom: 25px;">
+                Contactanos por WhatsApp o envíanos un correo.
+            </p>
+
+            <div style="display: flex; gap: 10px; margin-bottom: 20px;">
+                <a id="supportWhatsapp" href="https://wa.me/5492664024390" target="_blank"
+                    style="flex: 1; background: #25D366; color: white; padding: 12px 20px; border-radius: 8px; text-decoration: none; text-align: center; font-weight: 600; transition: all 0.3s ease;">
+                    <i class='bx bxl-whatsapp' style="font-size: 1.2rem; vertical-align: middle;"></i>
+                    Chat por WhatsApp
+                </a>
+                <button id="supportCopyLink" onclick="copyWhatsAppLink()"
+                    style="background: #ecf0f1; color: #2c3e50; padding: 12px 20px; border: none; border-radius: 8px; cursor: pointer; font-weight: 600; transition: all 0.3s ease;">
+                    <i class='bx bx-link' style="font-size: 1.2rem;"></i> Copiar link
+                </button>
+            </div>
+
+            <div style="text-align: left;">
+                <p style="font-size: 0.95rem; color: #2c3e50; margin-bottom: 10px;">
+                    <strong>O envíanos un mensaje (Formulario):</strong>
+                </p>
+                <form id="formSupport" action="https://formspree.io/f/mvgzqkpv" method="POST" target="_blank">
+                    <div style="margin-bottom: 10px;">
+                        <input type="email" name="email" placeholder="Tu email" required
+                            style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 6px; font-size: 0.95rem;">
+                    </div>
+                    <div style="margin-bottom: 10px;">
+                        <textarea name="message" placeholder="Escribe tu consulta aquí..." rows="4" required
+                            style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 6px; font-size: 0.95rem; resize: vertical;"></textarea>
+                    </div>
+                    <div style="margin-top: 15px; display: flex; gap: 10px;">
+                        <button type="submit"
+                            style="flex: 1; background: #3498db; color: white; padding: 12px 20px; border: none; border-radius: 8px; cursor: pointer; font-weight: 600; transition: all 0.3s ease;">
+                            <i class='bx bx-send'></i> Enviar mensaje
+                        </button>
+                        <button type="button" onclick="closeModal('modalSupport')"
+                            style="background: #95a5a6; color: white; padding: 12px 20px; border: none; border-radius: 8px; cursor: pointer; font-weight: 600; transition: all 0.3s ease;">
+                            Cerrar
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <p
+                style="text-align: center; font-size: 0.85rem; color: #95a5a6; margin-top: 20px; padding-top: 15px; border-top: 1px solid #ecf0f1;">
+                <i class='bx bx-info-circle'></i> Soporte: WhatsApp y formulario conectados (Formspree).
+            </p>
         </div>
     </div>
 
