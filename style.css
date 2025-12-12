@@ -481,3 +481,214 @@ body {
         min-width: 200px;
     }
 }
+
+/* ============================================ */
+/* ESTILOS PREMIUM - MERCADO PAGO */
+/* ============================================ */
+
+/* Botón Premium */
+.btn-premium {
+    background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+    color: #5c3a00;
+    font-weight: 700;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 10px;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(253, 185, 49, 0.4);
+    transition: all 0.3s ease;
+    margin-left: 15px;
+    font-size: 0.95rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    animation: pulseGlow 2s ease-in-out infinite;
+}
+
+.btn-premium:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(253, 185, 49, 0.6);
+    background: linear-gradient(135deg, #FFA500 0%, #FFD700 100%);
+}
+
+.btn-premium:active {
+    transform: translateY(-1px);
+}
+
+.btn-premium i {
+    font-size: 1.2rem;
+}
+
+/* Animación de pulso dorado */
+@keyframes pulseGlow {
+
+    0%,
+    100% {
+        box-shadow: 0 4px 15px rgba(253, 185, 49, 0.4);
+    }
+
+    50% {
+        box-shadow: 0 4px 25px rgba(253, 185, 49, 0.7);
+    }
+}
+
+/* Modal Premium */
+.modal-premium-content {
+    max-width: 850px !important;
+    max-height: 90vh !important;
+    background: white;
+    border-radius: 20px;
+    overflow-y: auto !important;
+    overflow-x: hidden;
+    animation: slideUp 0.4s ease-out;
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.modal-premium-header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 30px;
+    text-align: center;
+    position: relative;
+}
+
+.modal-premium-header h2 {
+    margin: 0;
+    font-size: 1.8rem;
+    font-weight: 700;
+}
+
+.modal-premium-content .close-modal {
+    color: white;
+    font-size: 28px;
+    opacity: 0.9;
+    transition: all 0.3s ease;
+    z-index: 10;
+}
+
+.modal-premium-content .close-modal:hover {
+    opacity: 1;
+    transform: rotate(90deg);
+}
+
+/* Precio Premium */
+.premium-price {
+    font-size: 3rem;
+    font-weight: 800;
+    color: #FFD700;
+    text-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+    animation: shimmer 3s ease-in-out infinite;
+}
+
+@keyframes shimmer {
+
+    0%,
+    100% {
+        text-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+    }
+
+    50% {
+        text-shadow: 0 0 30px rgba(255, 215, 0, 0.8), 0 0 40px rgba(255, 215, 0, 0.4);
+    }
+}
+
+/* Botones del modal */
+.modal-premium-content a:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 176, 255, 0.6) !important;
+}
+
+.modal-premium-content button:hover {
+    transform: translateY(-2px);
+    background: #FFD700 !important;
+    color: #5c3a00 !important;
+}
+
+/* Estado Premium Activado */
+.btn-premium.activated {
+    background: linear-gradient(135deg, #27ae60 0%, #2ecc71 100%);
+    color: white;
+    cursor: default;
+    animation: none;
+}
+
+.btn-premium.activated:hover {
+    transform: none;
+    box-shadow: 0 4px 15px rgba(39, 174, 96, 0.4);
+}
+
+/* Responsive Premium */
+@media (max-width: 768px) {
+    .modal-premium-content {
+        max-width: 95% !important;
+        max-height: 85vh !important;
+        margin: 20px 10px;
+    }
+
+    .modal-premium-header {
+        padding: 20px !important;
+    }
+
+    .modal-premium-header h2 {
+        font-size: 1.3rem !important;
+    }
+
+    .modal-premium-content .modal-body {
+        padding: 15px !important;
+    }
+
+    .modal-premium-content div[style*="grid-template-columns"] {
+        grid-template-columns: 1fr !important;
+        gap: 15px !important;
+    }
+
+    .premium-price {
+        font-size: 2.8rem !important;
+        margin: 15px 0 !important;
+    }
+
+    .btn-premium {
+        font-size: 0.8rem;
+        padding: 8px 12px;
+        margin-left: 8px;
+    }
+
+    .modal-premium-content table {
+        font-size: 0.8rem;
+        display: block;
+        overflow-x: auto;
+    }
+
+    .modal-premium-content table th,
+    .modal-premium-content table td {
+        padding: 6px !important;
+        font-size: 0.75rem;
+    }
+
+    .modal-premium-content h2 {
+        font-size: 1.2rem !important;
+    }
+
+    .modal-premium-content h3 {
+        font-size: 1.1rem !important;
+    }
+
+    .modal-premium-content ul li {
+        padding: 8px 0 !important;
+    }
+
+    .modal-premium-content ul li p {
+        font-size: 0.8rem !important;
+    }
+}
