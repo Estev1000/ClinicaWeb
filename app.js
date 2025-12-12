@@ -506,6 +506,17 @@ window.copyPaymentLink = function () {
     });
 };
 
+// Función para copiar link de soporte
+window.copyWhatsAppLink = function () {
+    const link = 'https://wa.me/5492664024390';
+    navigator.clipboard.writeText(link).then(() => {
+        alert('✅ Link de soporte copiado\n\nAbriendo WhatsApp...');
+        window.open(link, '_blank');
+    }).catch(() => {
+        prompt('Copia este link de soporte:', link);
+    });
+};
+
 // Función para ingresar código de activación manual
 window.enterProCode = function () {
     const code = prompt("🔑 Ingresa tu código de activación Premium:\n\n(Si pagaste y no se activó automáticamente, contacta a soporte)");
