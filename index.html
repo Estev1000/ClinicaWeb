@@ -66,6 +66,9 @@
                 <div class="user-profile">
                     <img src="https://ui-avatars.com/api/?name=Admin+User&background=0D8ABC&color=fff" alt="Admin">
                     <span>Administrador</span>
+                    <button id="btnPremium" class="btn-premium" onclick="openPaymentModal()">
+                        <i class='bx bxs-crown'></i> PREMIUM
+                    </button>
                 </div>
             </header>
 
@@ -337,6 +340,184 @@
                 </div>
                 <button type="submit" class="btn-primary full-width">Guardar Historial</button>
             </form>
+        </div>
+    </div>
+
+    <!-- Modal Premium / Mercado Pago -->
+    <div id="modalPremium" class="modal">
+        <div class="modal-content modal-premium-content">
+            <span class="close-modal" onclick="closeModal('modalPremium')">&times;</span>
+            <div class="modal-premium-header">
+                <h2><i class='bx bxs-crown' style="color: #FFD700; font-size: 2rem;"></i> Suscripción Premium</h2>
+                <p style="opacity: 0.9; margin-top: 10px;">Lleva tu clínica al siguiente nivel</p>
+            </div>
+            <div class="modal-body" style="padding: 40px;">
+                <h2 style="text-align: center; margin-bottom: 30px; color: #2c3e50;">
+                    🚀 Desbloquea Todo el Potencial de ClinicaWeb
+                </h2>
+
+                <div
+                    style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: start; margin-bottom: 40px;">
+                    <!-- Columna Izquierda: Beneficios -->
+                    <div>
+                        <h3 style="color: #2c3e50; margin-bottom: 20px; font-size: 1.3rem;">
+                            ✨ Beneficios Exclusivos
+                        </h3>
+                        <ul style="list-style: none; padding: 0;">
+                            <li style="padding: 12px 0; border-bottom: 1px solid #ecf0f1;">
+                                <i class='bx bx-check-circle'
+                                    style="color: #27ae60; font-size: 24px; vertical-align: middle;"></i>
+                                <strong style="margin-left: 10px;">Pacientes Ilimitados</strong>
+                                <p style="margin: 5px 0 0 34px; color: #7f8c8d; font-size: 0.9rem;">
+                                    Sin límites en tu crecimiento
+                                </p>
+                            </li>
+                            <li style="padding: 12px 0; border-bottom: 1px solid #ecf0f1;">
+                                <i class='bx bx-check-circle'
+                                    style="color: #27ae60; font-size: 24px; vertical-align: middle;"></i>
+                                <strong style="margin-left: 10px;">Historial Clínico Completo</strong>
+                                <p style="margin: 5px 0 0 34px; color: #7f8c8d; font-size: 0.9rem;">
+                                    Registros médicos detallados
+                                </p>
+                            </li>
+                            <li style="padding: 12px 0; border-bottom: 1px solid #ecf0f1;">
+                                <i class='bx bx-check-circle'
+                                    style="color: #27ae60; font-size: 24px; vertical-align: middle;"></i>
+                                <strong style="margin-left: 10px;">Reportes Avanzados</strong>
+                                <p style="margin: 5px 0 0 34px; color: #7f8c8d; font-size: 0.9rem;">
+                                    Estadísticas y análisis detallados
+                                </p>
+                            </li>
+                            <li style="padding: 12px 0; border-bottom: 1px solid #ecf0f1;">
+                                <i class='bx bx-check-circle'
+                                    style="color: #27ae60; font-size: 24px; vertical-align: middle;"></i>
+                                <strong style="margin-left: 10px;">Copias de Seguridad</strong>
+                                <p style="margin: 5px 0 0 34px; color: #7f8c8d; font-size: 0.9rem;">
+                                    Exporta y protege tus datos
+                                </p>
+                            </li>
+                            <li style="padding: 12px 0;">
+                                <i class='bx bx-check-circle'
+                                    style="color: #27ae60; font-size: 24px; vertical-align: middle;"></i>
+                                <strong style="margin-left: 10px;">Soporte Prioritario 24/7</strong>
+                                <p style="margin: 5px 0 0 34px; color: #7f8c8d; font-size: 0.9rem;">
+                                    Atención directa vía WhatsApp
+                                </p>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Columna Derecha: Precio y Pago -->
+                    <div
+                        style="text-align: center; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 30px; border-radius: 15px; color: white;">
+                        <p style="font-size: 1.1rem; margin-bottom: 10px; opacity: 0.9;">Suscripción Mensual</p>
+                        <div class="premium-price"
+                            style="font-size: 3rem; font-weight: 800; color: #FFD700; text-shadow: 0 0 20px rgba(255, 215, 0, 0.5); margin: 20px 0;">
+                            $8.000
+                        </div>
+                        <p style="opacity: 0.9; margin-bottom: 30px; font-size: 0.95rem;">ARS por mes • Cancela cuando
+                            quieras</p>
+
+                        <div style="display: flex; flex-direction: column; gap: 15px;">
+                            <!-- Botón Mercado Pago -->
+                            <a href="https://mpago.la/1qQmcP7" target="_blank" style="background: #00b0ff; color: white; padding: 18px 30px; 
+                                      border-radius: 10px; text-decoration: none; font-weight: bold;
+                                      display: inline-block; font-size: 1.1rem; box-shadow: 0 4px 15px rgba(0,176,255,0.4);
+                                      transition: all 0.3s ease;">
+                                <i class='bx bx-credit-card' style="font-size: 1.3rem; vertical-align: middle;"></i>
+                                Pagar con Mercado Pago
+                            </a>
+
+                            <!-- Botón Copiar Link -->
+                            <button onclick="copyPaymentLink()" style="background: transparent; border: 2px solid #FFD700; 
+                                           color: #FFD700; padding: 12px 20px; border-radius: 10px;
+                                           cursor: pointer; font-weight: bold; transition: all 0.3s ease;">
+                                <i class='bx bx-copy'></i> Copiar Link de Pago
+                            </button>
+                        </div>
+
+                        <div style="margin-top: 25px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.3);">
+                            <p style="font-size: 0.85rem; opacity: 0.9; line-height: 1.5;">
+                                <i class='bx bx-shield-quarter' style="font-size: 1.2rem; vertical-align: middle;"></i>
+                                <strong>Pago 100% Seguro</strong><br>
+                                Procesado por Mercado Pago
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Comparativa FREE vs PREMIUM -->
+                <div style="background: #f8f9fa; padding: 25px; border-radius: 10px; margin-bottom: 30px;">
+                    <h3 style="text-align: center; color: #2c3e50; margin-bottom: 20px;">
+                        📊 Comparativa de Versiones
+                    </h3>
+                    <table style="width: 100%; border-collapse: collapse;">
+                        <thead>
+                            <tr style="background: #34495e; color: white;">
+                                <th style="padding: 12px; text-align: left;">Característica</th>
+                                <th style="padding: 12px; text-align: center;">GRATIS</th>
+                                <th style="padding: 12px; text-align: center;">PREMIUM</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr style="border-bottom: 1px solid #dee2e6;">
+                                <td style="padding: 10px;">Pacientes</td>
+                                <td style="padding: 10px; text-align: center;">Máx. 10</td>
+                                <td style="padding: 10px; text-align: center; color: #27ae60; font-weight: bold;">✅
+                                    Ilimitados</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid #dee2e6;">
+                                <td style="padding: 10px;">Médicos</td>
+                                <td style="padding: 10px; text-align: center;">Básico</td>
+                                <td style="padding: 10px; text-align: center; color: #27ae60; font-weight: bold;">✅
+                                    Ilimitados</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid #dee2e6;">
+                                <td style="padding: 10px;">Historial Clínico</td>
+                                <td style="padding: 10px; text-align: center;">Limitado</td>
+                                <td style="padding: 10px; text-align: center; color: #27ae60; font-weight: bold;">✅
+                                    Completo</td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid #dee2e6;">
+                                <td style="padding: 10px;">Reportes</td>
+                                <td style="padding: 10px; text-align: center;">❌</td>
+                                <td style="padding: 10px; text-align: center; color: #27ae60; font-weight: bold;">✅
+                                    Avanzados</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 10px;">Exportar Datos</td>
+                                <td style="padding: 10px; text-align: center;">❌</td>
+                                <td style="padding: 10px; text-align: center; color: #27ae60; font-weight: bold;">✅ Sí
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Garantía y Tecnología -->
+                <div style="text-align: center; margin-bottom: 30px;">
+                    <p style="color: #7f8c8d; font-size: 0.95rem; line-height: 1.6;">
+                        <i class='bx bx-lock-alt' style="color: #27ae60; font-size: 1.2rem;"></i>
+                        <strong>💡 Tecnología Smart-Link:</strong> Una vez activo, tu acceso queda
+                        guardado en este dispositivo. ¡No necesitas contraseñas para volver a entrar!
+                    </p>
+                </div>
+
+                <!-- Sección de Código de Activación -->
+                <div style="padding-top: 30px; border-top: 2px solid #ecf0f1; text-align: center;">
+                    <p style="color: #7f8c8d; font-size: 0.95rem; margin-bottom: 15px;">
+                        ¿Ya tienes una licencia o código de activación?
+                    </p>
+                    <button onclick="enterProCode()" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); 
+                                   border: none; color: white; padding: 12px 30px; border-radius: 10px;
+                                   cursor: pointer; font-weight: bold; font-size: 1rem;
+                                   box-shadow: 0 4px 15px rgba(245, 87, 108, 0.3);
+                                   transition: all 0.3s ease;">
+                        <i class='bx bx-key' style="font-size: 1.2rem; vertical-align: middle;"></i>
+                        Ingresar Código de Activación
+                    </button>
+                </div>
+            </div>
         </div>
     </div>
 
